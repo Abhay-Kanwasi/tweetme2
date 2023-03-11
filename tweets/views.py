@@ -2,10 +2,11 @@ from django.shortcuts import render
 from django.http import HttpResponse,Http404,JsonResponse
 from .models import Tweet
 # Create your views here.
-def home_view(requests,*args,**kwargs):
-    return HttpResponse("<h1>Hello World</h1>") # But how django will know so we add it to urls.py
+def home_view(request,*args,**kwargs):
+    # return HttpResponse("<h1>Hello World</h1>") # But how django will know so we add it to urls.py
+    return render(request,"pages/home.html", context={}, status=200)
 
-def tweet_detail_view(requests, tweet_id , *args,**kwargs):
+def tweet_detail_view(request, tweet_id , *args,**kwargs):
     """
     REST API VIEW
     return json data (why? so we can consume by javascript/java/)
