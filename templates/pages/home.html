@@ -4,6 +4,22 @@
 Welcome to tweetme 2
 
 <script>
+    // initial setup
     const xhr = new XMLHttpRequest()
+    const method = 'GET' //"POST"
+    const url = "/tweets"
+    const responseType = "json"
+
+    // perform the request
+    xhr.responseType = responseType  //set it's own response type to initial response type
+    xhr.open(method, url) //Open up the request with this method and this url
+    //now handle this whenever it's loded
+    xhr.onload = function(){
+        console.log(xhr.response) 
+        const serverResponse = xhr.response
+        var listedItems = serverResponse.response
+        console.log(listedItems)
+    } //then it will load just logout the response that comes form the request itself
+    xhr.send() // triger this request
 </script>
 {% endblock content %}
