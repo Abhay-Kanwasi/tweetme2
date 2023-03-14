@@ -1,11 +1,26 @@
 import random
-from django.shortcuts import render
 from django.http import HttpResponse,Http404,JsonResponse
+from django.shortcuts import render
+
+from .form import TweetForm
+
 from .models import Tweet
 # Create your views here.
 def home_view(request,*args,**kwargs):
     # return HttpResponse("<h1>Hello World</h1>") # But how django will know so we add it to urls.py
     return render(request,"pages/home.html", context={}, status=200)
+
+def tweet_create_view(request, *args, **kwargs):
+    form = TweetForm(request.POST or None) #TweetForm class can initialise with data(POST) or not
+    if form.is_valid(): #If form is valid then do this
+        obj = form.save(commit=False)
+        # do other form related logic
+
+        obj.save() #Save it to database
+
+        form = TweetForm() #Reinitialize the form again (a blank form)
+    # If not valid then do this
+    return render(request,"components/form.html", context= {"form" : form})
 
 def tweet_list_view(request, *args, **kwargs):
     """
