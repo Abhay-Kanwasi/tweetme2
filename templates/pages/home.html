@@ -1,10 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-Welcome to tweetme 2
 
-<div id="tweets">
-    Loading..
+<div class="row text-center">
+    <div class="col">
+        <h2>Welcome to tweetme 2</h2>
+    </div>
+</div>
+
+<div class="row" id="tweets">
+    Loding..
 </div>
 
 <script>
@@ -25,7 +30,7 @@ Welcome to tweetme 2
 
     function handleDidLike(tweet_id, currentCount){
         console.log(tweet_id, currentCount)
-        currentCount++
+        return
     }
 
     function LikeBtn(tweet){
@@ -33,10 +38,10 @@ Welcome to tweetme 2
     }
 
     function formatTweetElement(tweet){
-        var formattedTweet = "<div class = 'mb-4 tweet' id = 'tweet-" + tweet.id 
+        var formattedTweet = "<div class='col-12 col-md-10 mx-auto border rounded py-3 mb-4 tweet' id = 'tweet-" + tweet.id 
         +"'><p>" + tweet.content + 
-            "</p><div class= 'btn-group'>" + LikeBtn(tweet) +         
-            
+            "</p><div class= 'btn-group'>" + LikeBtn(tweet) +   
+                      
             "</div></div>"
         return formattedTweet
     }
