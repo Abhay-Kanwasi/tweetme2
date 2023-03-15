@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
 from tweets.views import home_view, tweet_detail_view, tweet_list_view
 
 from tweets.views import (
@@ -25,7 +25,7 @@ from tweets.views import (
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_view), #That's how django know that we created a home_view
-    path('create-tweet',tweet_create_view),
+    re_path('create-tweet',tweet_create_view),
     path('tweets',tweet_list_view),
     path('tweets/<int:tweet_id>',tweet_detail_view)
 ]
