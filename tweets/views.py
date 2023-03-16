@@ -23,7 +23,7 @@ def tweet_create_view(request, *args, **kwargs):
 
         obj.save() #Save it to database
         if request.is_ajax():
-            return JsonResponse({}, status=201) #201 = created items
+            return JsonResponse(obj.serialize(), status=201) #201 = created items
         if next_url != None :
             return redirect(next_url)
 
@@ -37,7 +37,7 @@ def tweet_list_view(request, *args, **kwargs):
     return json data (why? so we can consume by javascript/java/)
     """
     qs = Tweet.objects.all() #It is grabing all the objects in tweet
-    tweets_list = [{"id":x.id, "content":x.content, "likes" :random.randint(0,12345) } for x in qs] #It is a data dictionary
+    tweets_list = [x.serialize() for x in qs] #It is a data dictionary
     data = {
         "isUser": False,
         "response": tweets_list
