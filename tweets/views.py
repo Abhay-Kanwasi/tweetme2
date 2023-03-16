@@ -22,7 +22,7 @@ def tweet_create_view(request, *args, **kwargs):
         # do other form related logic
 
         obj.save() #Save it to database
-        if next_url != None(next_url):
+        if next_url != None:
             return redirect(next_url)
 
         form = TweetForm() #Reinitialize the form again (a blank form)
