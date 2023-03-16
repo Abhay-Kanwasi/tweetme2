@@ -29,8 +29,24 @@
     function handleTweetCreateFormDidSumbit(event)
     {
         event.preventDefault()
-        console.log(event)
+        const myForm = event.target
+        const myFormData = new FormData(myForm)
 
+        // It will iterate through form data and tell us what inside the form(INCASE)
+        // for (var myItem of myFormData.entries()){console.log(myItem)}
+        const url = myForm.getAttribute("action")
+        const method = myForm.getAttribute("method")
+        const xhr = new XMLHttpRequest()
+        xhr.open(method, url)
+        xhr.onload = function(){
+            const serverResponse = xhr.response
+            console.log(serverResponse)
+            // reload the tweet after it succesfully load
+            const tweetsEl = document.getElementById("tweets")
+            loadTweets(tweetsEl)
+        
+        }
+        xhr.send(myFormData) // Send the data that came form the form
     }
 
     const tweetCreateFormEl = document.getElementById("tweet-create-form")
