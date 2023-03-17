@@ -14,6 +14,9 @@ class Tweet(models.Model):
     # It will create a image column in our database
     image = models.FileField(upload_to="images/", blank=True, null=True) #blank = not required in django | null = not required in database
 
+    class Meta:
+        ordering = ['-id']
+
     def serialize(self):
         return{
             "id":self.id,

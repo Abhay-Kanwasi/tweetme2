@@ -13,7 +13,7 @@
         <form class="form" id="tweet-create-form" method="POST" action="/create-tweet">
                 {% csrf_token %}
             <input type="hidden" value="/" name="next" />
-            <textarea class="form-control" name="content" placeholder="Your Tweet.."></textarea>
+            <textarea required= "required" class="form-control" name="content" placeholder="Your Tweet.."></textarea>
             <button type= 'submit' class="btn btn-primary">Tweet</button>    
         </form>
     </div>
@@ -51,7 +51,10 @@
                 // reload the tweet after it succesfully load
                 const newTweetElement = formatTweetElement(newTweetJson)
                 console.log(newTweetElement)
-                tweetsContainerElement.prepend(newTweetElement)
+                const ogHtml = tweetsContainerElement.innerHTML
+                tweetsContainerElement.innerHTML = newTweetElement + ogHtml //Newest tweet first
+                // empty the tweet box
+                myForm.reset()
             }
             
             
