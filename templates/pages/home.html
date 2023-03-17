@@ -56,8 +56,18 @@
                 // empty the tweet box
                 myForm.reset()
             }
+            else if(xhr.status === 400){
+                const errorJSON = xhr.response
+                conosle.log(errorJSON) 
+            }
+            else if(xhr.status === 500){
+                alert("Server Error : Try again")
+            }
             
-            
+        }
+        xhr.onerror = function()
+        {
+            alert("An error occured. Please try again later.")
         }
         xhr.send(myFormData) // Send the data that came form the form
     }
