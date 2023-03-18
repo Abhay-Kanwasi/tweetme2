@@ -59,7 +59,7 @@
         xhr.setRequestHeader("X-Requested-With","XMLHttpRequest")
         xhr.onload = function(){
             if(xhr.status===201){
-                handleTweetFormError(xhr.msg, false)
+                handleTweetFormError("", false)
                 const newTweetJson = xhr.response
                 // const newTweetJson = JSON.parse(newTweet)
                 // console.log(newTweetJson.status, serverResponse)
@@ -86,6 +86,7 @@
                 }else{
                     alert("An error occured! Please try again")
                 }
+                console.log(contentErrorMsg)
             }
             else if(xhr.status === 500){
                 alert("Server Error : Try again")
