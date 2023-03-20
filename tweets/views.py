@@ -11,6 +11,9 @@ from .models import Tweet
 
 # Create your views here.
 def home_view(request,*args,**kwargs):
+    """
+    REST API Create View -> DRF(Django Rest Framwork)
+    """
     # return HttpResponse("<h1>Hello World</h1>") # But how django will know so we add it to urls.py
     return render(request,"pages/home.html", context={}, status=200)
 
