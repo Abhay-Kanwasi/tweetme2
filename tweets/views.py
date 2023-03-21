@@ -8,7 +8,8 @@ from .models import Tweet
 from .serializers import TweetSerializer
 
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 # ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 
 # Create your views here.
@@ -20,6 +21,7 @@ def home_view(request,*args,**kwargs):
     return render(request,"pages/home.html", context={}, status=200)
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated]) #If they are authenticated only then they can access
 def tweet_create_view(request, *args, **kwargs):
     serializer = TweetSerializer(data = request.POST)
     if serializer.is_valid(raise_exception=True):
