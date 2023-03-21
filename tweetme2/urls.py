@@ -15,10 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path
-from tweets.views import home_view, tweet_detail_view, tweet_list_view
+from tweets.views import home_view, tweet_detail_view_pure_django, tweet_create_view_pure_django
 
 from tweets.views import (
-    home_view, tweet_detail_view, tweet_list_view,
+    home_view, tweet_detail_view_pure_django, tweet_list_view_pure_django,
      tweet_create_view_pure_django,
 )
 
@@ -26,6 +26,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_view), #That's how django know that we created a home_view
     re_path('create-tweet',tweet_create_view_pure_django),
-    path('tweets',tweet_list_view),
-    path('tweets/<int:tweet_id>',tweet_detail_view)
+    path('tweets',tweet_list_view_pure_django),
+    path('tweets/<int:tweet_id>',tweet_detail_view_pure_django)
 ]
