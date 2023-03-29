@@ -5,7 +5,11 @@ from django.shortcuts import render, redirect
 # from django.utils.http import is_safe_url
 from .form import TweetForm
 from .models import Tweet
-from .serializers import TweetSerializer, TweetActionSerializer
+from .serializers import (
+    TweetSerializer, 
+    TweetActionSerializer,
+    TweetCreateSerializer,
+)
 
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.response import Response
@@ -27,7 +31,7 @@ def home_view(request,*args,**kwargs):
 # @authentication_classes([SessionAuthentication])
 @permission_classes([IsAuthenticated]) #If they are authenticated only then they can access
 def tweet_create_view(request, *args, **kwargs):
-    serializer = TweetSerializer(data = request.POST)
+    serializer = TweetCreateSerializer(data = request.POST)
     if serializer.is_valid(raise_exception=True):
         serializer.save(user=request.user)
         return Response(serializer.data, status=201)
@@ -86,7 +90,7 @@ def tweet_action_view(request, *args, **kwargs):
             parent_obj = obj
             new_tweet = Tweet.objects.create(
                 user=request.user, 
-                parent = parent_obj,
+                parent = obj,
                 content = content,
                 )
             serializer = TweetSerializer(new_tweet)
@@ -98,7 +102,7 @@ def tweet_action_view(request, *args, **kwargs):
 def tweet_list_view(request, *args, **kwargs):
     qs = Tweet.objects.all() #qs = query set
     serializer = TweetSerializer(qs, many = True)
-    return Response(serializer.data)
+    return Response(serializer.data, status=200)
 
 
 
