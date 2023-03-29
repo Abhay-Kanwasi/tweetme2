@@ -9,6 +9,8 @@ In this todo list I added what will be the key components and in each key compon
                 -> Media Storage Server
         -> Delete
         -> Retweeting
+            -> Read only serializer
+            -> Create only serializer
         -> Liking or Unliking
 
 2. Users (What we will be having for users and what inside it)
