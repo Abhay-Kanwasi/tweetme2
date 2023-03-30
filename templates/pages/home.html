@@ -138,25 +138,25 @@
         const url = "/tweets"
         const responseType = "json"
 
-            // perform the request
-    xhr.responseType = responseType  //set it's own response type to initial response type
-    xhr.open(method, url) //Open up the request with this method and this url
-    //now handle this whenever it's loded
-    xhr.onload = function(){
-        const serverResponse = xhr.response
-        const listedItems = serverResponse
-        var finalTweetStr = ''
-        var i;
-        for(i=0; i<listedItems.length; i++){
-            var tweetObj = listedItems[i]
-            var currentItem = formatTweetElement(tweetObj)
-            finalTweetStr += currentItem
+        // perform the request
+        xhr.responseType = responseType  //set it's own response type to initial response type
+        xhr.open(method, url) //Open up the request with this method and this url
+        //now handle this whenever it's loded
+        xhr.onload = function(){
+            const serverResponse = xhr.response
+            const listedItems = serverResponse
+            var finalTweetStr = ''
+            var i;
+            for(i=0; i<listedItems.length; i++){
+                var tweetObj = listedItems[i]
+                var currentItem = formatTweetElement(tweetObj)
+                finalTweetStr += currentItem
+            }
+            tweetsElement.innerHTML = finalTweetStr
+        } //then it will load just logout the response that comes form the request itself
+        xhr.send() // triger this request
         }
-        tweetsElement.innerHTML = finalTweetStr
-    } //then it will load just logout the response that comes form the request itself
-    xhr.send() // triger this request
-    }
-    loadTweets(tweetsContainerElement)
+        loadTweets(tweetsContainerElement)
 
     function handleTweetActionBtn(tweet_id, currentCount, action){
         console.log(tweet_id, currentCount)

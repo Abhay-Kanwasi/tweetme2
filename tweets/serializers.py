@@ -34,14 +34,19 @@ class TweetCreateSerializer(serializers.ModelSerializer):
     
 class TweetSerializer(serializers.ModelSerializer):
     likes = serializers.SerializerMethodField(read_only=True)
-    content = serializers.SerializerMethodField(read_only=True)
+    parent = TweetCreateSerializer(read_only=True)
+
     class Meta:
         model = Tweet
-        fields = ['id','content', 'likes']
+        fields = ['id','content', 'likes', 'is_retweet','parent']
     
     def get_likes(self,obj):
         return obj.likes.count() # It give us the number right back
     
     # for using the content 
     def get_content(self,obj):
-        return obj.content
+        content = obj.content
+        if obj.is_retweet: #Correct retweet
+            content = obj.parent.content
+        return content
+        

@@ -28,7 +28,7 @@ def home_view(request,*args,**kwargs):
     return render(request,"pages/home.html", context={}, status=200)
 
 @api_view(['POST'])
-# @authentication_classes([SessionAuthentication])
+@authentication_classes([SessionAuthentication])
 @permission_classes([IsAuthenticated]) #If they are authenticated only then they can access
 def tweet_create_view(request, *args, **kwargs):
     serializer = TweetCreateSerializer(data = request.POST)
@@ -61,6 +61,8 @@ def tweet_delete_view(request, tweet_id, *args, **kwargs):
     obj.delete()
     return Response({"message":"Tweet removed"}, status = 200)
 
+
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def tweet_action_view(request, *args, **kwargs):
@@ -71,18 +73,19 @@ def tweet_action_view(request, *args, **kwargs):
     serializer = TweetSerializer(data = request.data) #change it to data because we are dealing with JSON data
     if serializer.is_valid(raise_exception=True):
         data = serializer.validated_data
-        tweet_id = data.get("id")
-        action = data.get("action")
+        tweet_id = request.data.get("id")
+        action = request.data.get("action")
         content = data.get("content")
         qs = Tweet.objects.filter(id = tweet_id) #qs = query set
+        print(request.data.get('id'))
         if not qs.exists():
-            return Response({},status=404)
-        obj.likes.add(request.user)
+            return Response({'message':'id not found'},status=404)
+
         obj = qs.first()
         if action == "like":
             obj.likes.add(request.user)
             serializer = TweetSerializer(obj)
-            return Response(serializer.data,status=404)
+            return Response(serializer.data,status=200)
         elif action == "unlike":
             obj.likes.remove(request.user)
         elif action == "retweet":
@@ -103,13 +106,6 @@ def tweet_list_view(request, *args, **kwargs):
     qs = Tweet.objects.all() #qs = query set
     serializer = TweetSerializer(qs, many = True)
     return Response(serializer.data, status=200)
-
-
-
-
-
-
-
 
 
 
