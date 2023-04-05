@@ -39,6 +39,7 @@ class Tweet(models.Model):
 
     # Time stamp for tweets
     timestamp = models.DateTimeField(auto_now_add=True)
+
     class Meta:
         ordering = ['-id']
 
@@ -46,6 +47,7 @@ class Tweet(models.Model):
     @property
     def is_retweet(self):
         return self.parent != None
+    
     def serialize(self):
         '''old method'''
         return{
