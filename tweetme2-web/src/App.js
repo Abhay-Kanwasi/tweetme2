@@ -1,13 +1,28 @@
+// useEffect will be run our http request
+import React, { useEffect, useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+
 function App() {
+  const [tweets, setTweets] = useState([{ content: 123 }]) //with this we can use these inside of my component using curly brackets({})
+  
+  useEffect(() => {
+    // do my lookup
+    const tweetsItems = [{"content": 123}, {"content" : "Hello World"}]
+    setTweets(tweetsItems)
+  }, [])
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <p>
+          {tweets.map((tweets, index) => {
+            return <li>{tweets.content}</li>
+          })}
         </p>
         <a
           className="App-link"
