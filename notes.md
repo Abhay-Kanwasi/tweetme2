@@ -1,5 +1,5 @@
 ### Why we install CORS ?
-
+Cross-Origin Resource Sharing (CORS)
 Adding CORS headers allows your resources to be accessed on other domains.It’s important you understand the implications before adding the headers, since you could be unintentionally opening up your site’s private data to others.
 
 ### Why in middleware it's should be on top?
