@@ -24,7 +24,16 @@ function loadTweets(callback) {
   }
   xhr.send() // triger this request
 }
-  
+
+// New way to render our tweet
+function Tweet(props) { // using props you can add various elements like tweet className
+  const { tweet } = props
+  const className = props.className ? props.className : 'col-10 mx-auto col-md-6' // Here '?' indicating if it exists and ':' indicating else default
+  return <div className={className}>
+    <p>{ tweet.id } - { tweet.content }</p>
+  </div>
+}
+
 function App() {
   const [tweets, setTweets] = useState([{ content: 123 }]) //with this we can use these inside of my component using curly brackets({})
   
@@ -50,11 +59,11 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <p>
-          {tweets.map((tweets, index) => {
-            return <li>{tweets.content}</li>
+        <div>
+          {tweets.map((item, index) => {
+            return <Tweet tweet = {item} className = 'my-5 py-5 border bg-white text-dark' key = {`${index}-{item.id}`} /> 
           })}
-        </p>
+        </div>
         <a
           className="App-link"
           href="https://reactjs.org"
