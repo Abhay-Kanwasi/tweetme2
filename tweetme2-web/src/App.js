@@ -8,7 +8,7 @@ function loadTweets(callback) {
   // initial setup
   const xhr = new XMLHttpRequest()
   const method = 'GET' //"POST"
-  const url = " http://127.0.0.1:8000/api/tweets/" // Changing this url so our react app can have some sort of connection with django server
+  const url = " http://localhost:8000/api/tweets/" // Changing this url so our react app can have some sort of connection with django server
   const responseType = "json"
 
   // perform the request

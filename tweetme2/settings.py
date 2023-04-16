@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-#-qxey*d&lisv9tw$m15=f^+7xoa1s%k8ut4_@7x3cj$6rqo@(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', '.cfe.sh', 'localhost']
 LOGIN_URL = "/login"
 TWEET_ACTIONS_OPTIONS = ['like','unlike','retwet']
 MAX_TWEET_LENGTH = 240
@@ -45,17 +45,28 @@ INSTALLED_APPS = [
     'rest_framework',
     # internal
     'tweets',
+    # django-cors-headers added
+    "corsheaders",
 ]
 
-MIDDLEWARE = [
+MIDDLEWARE = [ 
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+
+    # corsheader middleware
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
+
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # Ajax middleware
     'tweets.middlewares.AjaxMiddleware',
+
+    
 ]
 
 ROOT_URLCONF = 'tweetme2.urls'
@@ -125,6 +136,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+CORS_ORIGIN_ALLOW_ALL = True # It means any website can access my api
+CORS_URLS_REGEX = r"^/api/.*$" # Any url that matches this regular expression allow them to access resource
 
 DEFAULT_RENDERER_CLASSES = [
     'rest_framework.renderers.JSONRenderer',
