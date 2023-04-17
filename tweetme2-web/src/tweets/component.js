@@ -32,12 +32,19 @@ export function TweetsList(props) {
 
 export function ActionBtn(props) {
   const { tweet, action } = props;
-  const className = props.className
-    ? props.className
-    : "btn btn-primary btn-sm";
-  return action.type === "like" ? (
-    <button className={className}>{tweet.likes} Likes</button>
-  ) : null;
+  const className = props.className ? props.className: "btn btn-primary btn-sm";
+  const actionDisplay = action.display ? action.display : 'Action'
+  let likes = tweet.likes
+  // Dynamic way to ensure our action(Incase we don't give a type to our action btn so this will show action btn instead)
+  const handleClick = (event) => {
+    event.preventDefault()
+    if (action.type === 'like') {
+      console.log(tweet.likes + 1)
+      likes = tweet.likes + 1
+    }
+  }
+  const display = action.type === 'like' ? `${likes}${actionDisplay}` : actionDisplay 
+  return <button className={className} onClick = {handleClick}>{display}</button>
 }
 
 // New way to render our tweet
@@ -53,8 +60,10 @@ export function Tweet(props) {
         {tweet.id} - {tweet.content}
       </p>
       <div className="btn btn-group">
-        <ActionBtn tweet={tweet} action={{ type: "like" }} />
-        <ActionBtn tweet={tweet} action={{ type: "unlike" }} />
+      {/* This will display the like unlike and retweet button in our app */}
+        <ActionBtn tweet={tweet} action={{ type: "like", display:"Likes" }} />
+        <ActionBtn tweet={tweet} action={{ type: "unlike", display: "Unlike" }} />
+        <ActionBtn tweet={tweet} action={{ type: "retweet", display: "Retweet" }} />
       </div>
     </div>
   );
