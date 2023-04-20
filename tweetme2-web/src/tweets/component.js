@@ -32,15 +32,25 @@ export function TweetsList(props) {
 
 export function ActionBtn(props) {
   const { tweet, action } = props;
+  const [likes, setLikes] = useState(tweet.likes ? tweet.likes : 0) // useState hook allow changes how this will work
+  const [userLike, setUserLike] = useState(tweet.userLike === true ? true : false)
   const className = props.className ? props.className: "btn btn-primary btn-sm";
   const actionDisplay = action.display ? action.display : 'Action'
-  let likes = tweet.likes
+  
   // Dynamic way to ensure our action(Incase we don't give a type to our action btn so this will show action btn instead)
   const handleClick = (event) => {
     event.preventDefault()
     if (action.type === 'like') {
-      console.log(tweet.likes + 1)
-      likes = tweet.likes + 1
+      if (userLike === true) {
+        // Unlike it
+        setLikes(likes - 1)
+        setUserLike(false)
+      }
+      else {
+        // like it
+        setLikes(likes + 1)
+        setUserLike(true)
+      }  
     }
   }
   const display = action.type === 'like' ? `${likes}${actionDisplay}` : actionDisplay 
