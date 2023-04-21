@@ -6,10 +6,19 @@ import {loadTweets} from "../lookup"
 
 export function TweetsComponent(props) {
   const textAreaRef = React.createRef()
+  const [newTweets, setNewTweets] = useState([])
   const handleSubmit = (event) => {
     event.preventDefault()
     const newVal = textAreaRef.current.value
-    console.log(newVal)
+    let tempNewTweets = [...newTweets] // Copied the newTweet list
+    //push will send our element into tempNewTweets list
+    //but push will put it into last but we need in the very beginning so we use unshift
+    tempNewTweets.unshift({
+      content: newVal,
+      likes: 0,
+      id:1243
+    })
+    setNewTweets(tempNewTweets)
     textAreaRef.current.value = ''
   }
   return <div className={props.className}>
@@ -21,17 +30,26 @@ export function TweetsComponent(props) {
       <button type="submit" className="btn btn-primary my-3">Tweet</button>
       </form>
     </div>
-    <TweetsList />
+    <TweetsList newTweets={newTweets} />
     </div>
 }
-export function TweetsList(props) {
-  const [tweets, setTweets] = useState([]);
 
+// Add this property monitor prop changes and if they do change then we will combine it with another array that has a state (Simply putting we can now tweet through our tweet react app)
+export function TweetsList(props) {
+  const [tweetsInit, setTweetsInit] = useState([]);
+  const [tweets, setTweets] = useState([])
+  // setTweetsInit([...props.newTweets].concat(tweetsInit)) //But it will cause a infinite loop
+  useEffect(() => {
+    const final = [...props.newTweets].concat(tweetsInit) // concat(tweetsInit) is after props.newTweets to maintain order how tweets will appear
+    if (final.length !== tweets.length) {
+      setTweets(final)
+    }
+  }, [props.newTweets,tweets, tweetsInit])
   useEffect(() => {
     // do my lookup
     const myCallback = (response, status) => {
       if (status === 200) {
-        setTweets(response); //tweetItems is nothing but response
+        setTweetsInit(response); //tweetItems is nothing but response
       } else {
         alert("There was an error"); // This will get us a pop-up message (localhost: 3000 says (whaterver inside of alert)) in our reacr app
       }
