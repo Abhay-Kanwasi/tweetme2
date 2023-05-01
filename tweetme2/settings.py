@@ -140,6 +140,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
+STATIC_ROOT = BASE_DIR / "static-root"
 
 CORS_ORIGIN_ALLOW_ALL = True # It means any website can access my api
 CORS_URLS_REGEX = r"^/api/.*$" # Any url that matches this regular expression allow them to access resource
