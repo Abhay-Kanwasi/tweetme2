@@ -136,6 +136,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+# Store some of my static files
+STATICFILES_DIRS = [
+    BASE_DIR / "static"
+]
 
 CORS_ORIGIN_ALLOW_ALL = True # It means any website can access my api
 CORS_URLS_REGEX = r"^/api/.*$" # Any url that matches this regular expression allow them to access resource
