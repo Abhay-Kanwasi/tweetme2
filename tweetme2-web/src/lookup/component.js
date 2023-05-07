@@ -22,6 +22,10 @@ function lookup(method, endpoint, callback, data) {
     xhr.send(jsonData); // triger this request
   }
 
+// A function to sending the tweet
+export function createTweet(newTweet, callback) {
+  lookup("POST", "/tweets/create/", callback, {content: newTweet})
+}  
 export function loadTweets(callback) {
     lookup("GET","/tweets/",callback)
   }

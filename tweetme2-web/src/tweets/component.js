@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import {loadTweets} from "../lookup"
+import {createTweet, loadTweets} from "../lookup"
 
 // a component that hold our tweets and have an ability to add new tweets
 
@@ -11,13 +11,17 @@ export function TweetsComponent(props) {
     event.preventDefault()
     const newVal = textAreaRef.current.value
     let tempNewTweets = [...newTweets] // Copied the newTweet list
-    //push will send our element into tempNewTweets list
-    //but push will put it into last but we need in the very beginning so we use unshift
-    tempNewTweets.unshift({
-      content: newVal,
-      likes: 0,
-      id:1243
+    createTweet(newVal, (response, status) => {
+      if (status === 201) {
+        //push will send our element into tempNewTweets list
+        //but push will put it into last but we need in the very beginning so we use unshift
+        tempNewTweets.unshift(response)
+      } else {
+        console.log(response)
+        alert("An error occured please try again")
+      }
     })
+    
     setNewTweets(tempNewTweets)
     textAreaRef.current.value = ''
   }
