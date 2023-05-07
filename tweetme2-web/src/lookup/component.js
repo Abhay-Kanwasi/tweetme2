@@ -1,8 +1,10 @@
-export function loadTweets(callback) {
-    // initial setup
-    const xhr = new XMLHttpRequest();
-    const method = "GET"; //"POST"
-    const url = " http://localhost:8000/api/tweets/"; // Changing this url so our react app can have some sort of connection with django server
+function lookup(method, endpoint, callback, data) {
+  let jsonData;
+  if (data) {
+    jsonData = JSON.stringify(data)
+  }
+  const xhr = new XMLHttpRequest();
+    const url = `http://localhost:8000/api${endpoint}/` // Changing this url so our react app can have some sort of connection with django server
     const responseType = "json";
   
     // perform the request
@@ -15,7 +17,12 @@ export function loadTweets(callback) {
     xhr.onerror = function (e) {
       console.log(e);
       callback({ message: "Request was the error" }, 400);
-    };
-    xhr.send(); // triger this request
+  };
+  
+    xhr.send(jsonData); // triger this request
+  }
+
+export function loadTweets(callback) {
+    lookup("GET","/tweets/",callback)
   }
   
