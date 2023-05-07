@@ -38,6 +38,7 @@ export function TweetsComponent(props) {
 export function TweetsList(props) {
   const [tweetsInit, setTweetsInit] = useState([]);
   const [tweets, setTweets] = useState([])
+  const [tweetsDidSet, setTweetsDidSet] = useState(false)
   // setTweetsInit([...props.newTweets].concat(tweetsInit)) //But it will cause a infinite loop
   useEffect(() => {
     const final = [...props.newTweets].concat(tweetsInit) // concat(tweetsInit) is after props.newTweets to maintain order how tweets will appear
@@ -46,16 +47,19 @@ export function TweetsList(props) {
     }
   }, [props.newTweets,tweets, tweetsInit])
   useEffect(() => {
-    // do my lookup
-    const myCallback = (response, status) => {
-      if (status === 200) {
-        setTweetsInit(response); //tweetItems is nothing but response
-      } else {
-        alert("There was an error"); // This will get us a pop-up message (localhost: 3000 says (whaterver inside of alert)) in our reacr app
-      }
-    };
-    loadTweets(myCallback);
-  }, []);
+    if (tweetsDidSet === false) {
+        // do my lookup
+        const myCallback = (response, status) => {
+          if (status === 200) {
+            setTweetsInit(response); //tweetItems is nothing but response
+            setTweetsDidSet(true)
+          } else {
+            alert("There was an error"); // This will get us a pop-up message (localhost: 3000 says (whaterver inside of alert)) in our reacr app
+          }
+        };
+        loadTweets(myCallback);
+    } 
+  }, [tweetsInit,tweetsDidSet,setTweetsDidSet]);
 
   return (
     <div>
