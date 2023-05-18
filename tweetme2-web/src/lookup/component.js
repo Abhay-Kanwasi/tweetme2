@@ -19,7 +19,7 @@ function getCookie(name){
   }
   const xhr = new XMLHttpRequest();
     const url = `http://localhost:8000/api${endpoint}/` // Changing this url so our react app can have some sort of connection with django server
-    const responseType = "json";
+//    const responseType = "json";
     const csrftoken = getCookie('csrftoken');
     xhr.open(method,url)
     xhr.setRequestHeader("Content-Type","application/json")
