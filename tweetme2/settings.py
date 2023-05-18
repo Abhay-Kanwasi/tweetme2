@@ -142,22 +142,28 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = BASE_DIR / "static-root"
 
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',  # Add your React application's URL.
+]
 CORS_ORIGIN_ALLOW_ALL = True # It means any website can access my api
 CORS_URLS_REGEX = r"^/api/.*$" # Any url that matches this regular expression allow them to access resource
 
 DEFAULT_RENDERER_CLASSES = [
     'rest_framework.renderers.JSONRenderer',
 ]
+DEFAULT_AUTHENTICATION_CLASSES = [
+ 'rest_framework.authentication.SessionAuthentication',   
+]
 
 if DEBUG:
     DEFAULT_RENDERER_CLASSES += [
         'rest_framework.renderers.BrowsableAPIRenderer',
         ]
-
+    DEFAULT_AUTHENTICATION_CLASSES += [
+        'tweetme2.rest_api.dev.DevAuthentication'
+    ]
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES' : [
-        'rest_framework.authentication.SessionAuthentication'
-    ],
+    'DEFAULT_AUTHENTICATION_CLASSES' : DEFAULT_AUTHENTICATION_CLASSES,
     'DEFAULT_RENDERER_CLASSES' : DEFAULT_RENDERER_CLASSES
 }
 

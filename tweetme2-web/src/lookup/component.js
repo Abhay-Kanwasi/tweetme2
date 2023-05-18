@@ -25,9 +25,9 @@ function getCookie(name){
     xhr.setRequestHeader("Content-Type","application/json")
 
     if (csrftoken) {
-    xhr.setRequestHeader("HTTP_X_REQUESTED_WITH","XMLHttpRequest")
-    xhr.setRequestHeader("X-Requested-With","XMLHttpRequest")
-    xhr.setRequestHeader("X-CSRFToken", csrftoken)
+      xhr.setRequestHeader("HTTP_X_REQUESTED_WITH","XMLHttpRequest")
+      xhr.setRequestHeader("X-Requested-With","XMLHttpRequest")
+      xhr.setRequestHeader("X-CSRFToken", csrftoken)
     }
 
     xhr.onload = function () {
